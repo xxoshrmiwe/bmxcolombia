@@ -197,6 +197,19 @@ footer { background: var(--tierra); padding: 4rem 2.5rem 2rem; }
 .nav-wheel-label { position: absolute; bottom: -1.6rem; left: 50%; transform: translateX(-50%); font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.15em; color: var(--rojo); white-space: nowrap; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
 .nav-wheel-btn:hover .nav-wheel-label { opacity: 1; }
 
+/* Navbar hamburger */
+.nav-desktop-links { display: flex; align-items: center; gap: 2rem; font-family: var(--font-mono); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.1em; }
+.nav-hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 2rem; height: 2rem; background: transparent; border: none; cursor: pointer; padding: 0; }
+.nav-ham-line { display: block; width: 100%; height: 1.5px; background: var(--blanco); transition: transform 0.25s ease, opacity 0.25s ease; transform-origin: center; }
+.nav-ham-line:nth-child(1).open { transform: translateY(6.5px) rotate(45deg); }
+.nav-ham-line:nth-child(2).open { opacity: 0; }
+.nav-ham-line:nth-child(3).open { transform: translateY(-6.5px) rotate(-45deg); }
+.nav-mobile-menu { display: none; flex-direction: column; background: var(--carbon); border-top: 1px solid rgba(245,240,232,0.08); overflow: hidden; max-height: 0; transition: max-height 0.3s ease; }
+.nav-mobile-menu--open { max-height: 20rem; }
+.nav-mobile-link { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gris); text-decoration: none; padding: 1rem 1.5rem; border-bottom: 1px solid rgba(245,240,232,0.05); transition: color 0.2s, background 0.2s; }
+.nav-mobile-link:hover { color: var(--blanco); background: rgba(245,240,232,0.03); }
+.nav-mobile-login { color: var(--rojo); }
+
 /* Login page */
 .login-page { background: var(--carbon); }
 .login-header { margin-bottom: 2.5rem; }
@@ -208,6 +221,56 @@ footer { background: var(--tierra); padding: 4rem 2.5rem 2rem; }
 .login-actions { margin-top: 0.5rem; }
 .login-footer-text { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; color: var(--gris); text-align: center; }
 .login-footer-text a { color: var(--rojo); text-decoration: none; }
+
+/* =====================
+   RESPONSIVE — MOBILE
+   ===================== */
+@media (max-width: 768px) {
+  /* Navbar */
+  .nav-desktop-links { display: none; }
+  .nav-hamburger { display: flex; }
+  .nav-mobile-menu { display: flex; }
+
+  /* Layout */
+  section { padding: 4rem 1.25rem; }
+
+  /* Hero */
+  .hero { grid-template-columns: 1fr; padding: 0 1.25rem; min-height: auto; padding-top: 5rem; padding-bottom: 4rem; }
+  .hero::before { background: linear-gradient(160deg, var(--tierra) 0%, var(--polvo) 50%, transparent 100%); }
+  .hero-visual { display: none; }
+  .hero-content { padding: 2rem 0 2rem; }
+  .hero-title { font-size: clamp(3.5rem, 16vw, 6rem); }
+  .hero-sub { max-width: 100%; }
+  .hero-stats { position: static; flex-wrap: wrap; gap: 1.5rem; margin-top: 2.5rem; }
+  .hero-slash { display: none; }
+
+  /* Ranking */
+  .ranking-header { grid-template-columns: 1fr; gap: 1.5rem; }
+  .filter-tabs { justify-content: flex-start; }
+  .pilots-grid { grid-template-columns: 1fr; }
+
+  /* Calendar */
+  .event-row { grid-template-columns: 60px 1fr; gap: 1rem; }
+  .event-badge { display: none; }
+
+  /* News */
+  .news-grid { grid-template-columns: 1fr; }
+  .news-side { gap: 2px; }
+
+  /* Join / Community */
+  .join-section { grid-template-columns: 1fr; gap: 2.5rem; padding: 4rem 1.25rem; }
+  .join-desc { max-width: 100%; }
+  .form-row { grid-template-columns: 1fr; }
+
+  /* Sponsors */
+  .sponsors-section { padding: 3rem 1.25rem; }
+  .sponsors-row { gap: 1.5rem; }
+
+  /* Footer */
+  footer { padding: 3rem 1.25rem 2rem; }
+  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+}
 
 @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
