@@ -1,12 +1,12 @@
 import { client, urlFor } from '@/sanity/client'
 import Image from 'next/image'
 import Link from 'next/link'
+import { NOTICIAS_RECIENTES_QUERY } from '@/sanity/queries'
 export const revalidate = 60
-const NOTICIAS_QUERY = `*[_type == "noticia"] | order(publicadoEn desc) [0..9] { _id, titulo, slug, imagen, categoria, extracto, publicadoEn, autor }`
 export default async function NoticiasPage() {
-  const noticias = await client.fetch(NOTICIAS_QUERY)
+  const noticias = await client.fetch(NOTICIAS_RECIENTES_QUERY)
   return (
-    <main className="min-h-screen bg-[#0D0D0D] text-white pt-24 px-6 pb-16">
+    <main className="min-h-screen text-white pt-24 px-6 pb-16">
       <div className="max-w-7xl mx-auto">
         <h1 className="font-black text-6xl uppercase italic mb-10">Noticias <span className="text-red-600">BMX</span></h1>
         {noticias.length === 0 ? (
@@ -14,8 +14,12 @@ export default async function NoticiasPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {noticias.map((noticia: any) => (
-              <Link key={noticia._id} href={`/noticias/${noticia.slug?.current}`} className="group block bg-[#1A0A00] hover:bg-[#2A1000] transition-colors">
-                {noticia.imagen && <div className="relative h-48 overflow-hidden"><Image src={urlFor(noticia.imagen).width(400).height(200).url()} alt={noticia.titulo} fill className="object-cover group-hover:scale-105 transition-transform duration-500" /></div>}
+              <Link key={noticia._id} href={`/noticias/${noticia.slug?.current}`} className="group block noticia-card">
+                {noticia.imagen && (
+                  <div className="relative h-48 overflow-hidden">
+                    <Image src={urlFor(noticia.imagen).width(400).height(200).url()} alt={noticia.titulo} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                  </div>
+                )}
                 <div className="p-5">
                   <span className="text-xs font-mono text-red-500 uppercase tracking-widest">{noticia.categoria}</span>
                   <h2 className="font-black text-lg uppercase italic mt-1 mb-2 group-hover:text-yellow-400 transition-colors">{noticia.titulo}</h2>
