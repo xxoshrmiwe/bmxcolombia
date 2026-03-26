@@ -1,4 +1,67 @@
+'use client'
+import { useEffect } from 'react'
+import Link from 'next/link'
 
+export default function Home() {
+  useEffect(() => {
+    const speedLinesContainer = document.getElementById('speedLines')
+    if (speedLinesContainer) {
+      for (let i = 0; i < 12; i++) {
+        const line = document.createElement('div')
+        line.className = 'speed-line'
+        line.style.cssText =
+          'position:absolute;height:1px;background:linear-gradient(to right,transparent,rgba(255,209,0,0.3),transparent);animation:speedLine 3s linear infinite;opacity:0;top:' +
+          (20 + Math.random() * 60) + '%;width:' +
+          (100 + Math.random() * 200) + 'px;animation-delay:' +
+          (Math.random() * 5) + 's;animation-duration:' +
+          (2 + Math.random() * 3) + 's;'
+        speedLinesContainer.appendChild(line)
+      }
+    }
+
+    document.querySelectorAll('.filter-tab').forEach(tab => {
+      tab.addEventListener('click', function (this: HTMLElement) {
+        document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'))
+        this.classList.add('active')
+      })
+    })
+
+    const nav = document.querySelector('nav')
+    const handleScroll = () => {
+      if (nav) nav.style.background = window.scrollY > 80
+        ? 'rgba(13,13,13,0.98)'
+        : 'linear-gradient(to bottom,rgba(13,13,13,0.98),transparent)'
+    }
+    window.addEventListener('scroll', handleScroll)
+
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement
+            el.style.opacity = '1'
+            el.style.transform = 'translateY(0)'
+          }
+        })
+      },
+      { threshold: 0.1 }
+    )
+    document.querySelectorAll('.pilot-card,.event-row,.news-item,.news-main').forEach(el => {
+      const el2 = el as HTMLElement
+      el2.style.opacity = '0'
+      el2.style.transform = 'translateY(20px)'
+      el2.style.transition = 'opacity 0.5s ease,transform 0.5s ease'
+      observer.observe(el2)
+    })
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      observer.disconnect()
+    }
+  }, [])
+
+  return (
+    <>
       {/* HERO */}
       <section className="hero">
         <div className="hero-slash"></div>
@@ -270,28 +333,6 @@
           <span className="footer-domain">bmxcolombia.co</span>
         </div>
       </footer>
-
-      <script dangerouslySetInnerHTML={{__html:`
-        const speedLinesContainer = document.getElementById('speedLines');
-        if(speedLinesContainer){
-          for(let i=0;i<12;i++){
-            const line=document.createElement('div');
-            line.className='speed-line';
-            line.style.cssText='position:absolute;height:1px;background:linear-gradient(to right,transparent,rgba(255,209,0,0.3),transparent);animation:speedLine 3s linear infinite;opacity:0;top:'+(20+Math.random()*60)+'%;width:'+(100+Math.random()*200)+'px;animation-delay:'+(Math.random()*5)+'s;animation-duration:'+(2+Math.random()*3)+'s;';
-            speedLinesContainer.appendChild(line);
-          }
-        }
-        document.querySelectorAll('.filter-tab').forEach(tab=>{
-          tab.addEventListener('click',function(){
-            document.querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));
-            this.classList.add('active');
-          });
-        });
-        const nav=document.querySelector('nav');
-        if(nav) window.addEventListener('scroll',()=>{nav.style.background=window.scrollY>80?'rgba(13,13,13,0.98)':'linear-gradient(to bottom,rgba(13,13,13,0.98),transparent)';});
-        const observer=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.style.opacity='1';entry.target.style.transform='translateY(0)';}});},{threshold:0.1});
-        document.querySelectorAll('.pilot-card,.event-row,.news-item,.news-main').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(20px)';el.style.transition='opacity 0.5s ease,transform 0.5s ease';observer.observe(el);});
-      `}}/>
     </>
   )
 }
