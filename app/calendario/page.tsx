@@ -24,11 +24,11 @@ export default async function CalendarioPage() {
                   </div>
                   <div className="flex-1">
                     <h2 className="font-black text-xl uppercase italic group-hover:text-yellow-400 transition-colors">{evento.nombre}</h2>
-                    <p className="text-gray-500 text-sm mt-1">📍 {evento.pista?`${evento.pista}, ':''}{evento.ciudad}, {evento.departamento}</p>
+                    <p className="text-gray-500 text-sm mt-1">📍 {evento.pista ? `${evento.pista}, ` : ''}{evento.ciudad}, {evento.departamento}</p>
                   </div>
                   <div className="flex gap-2 items-center">
                     {evento.inscripcionesAbiertas && evento.urlInscripcion && <a href={evento.urlInscripcion} target="_blank" className="text-xs font-mono px-3 py-1 bg-green-600 text-white uppercase tracking-wider hover:bg-green-500">Inscribirse</a>}
-                    <span className={`text-xs font-mono px-3 py-1 uppercase tracking-wider ${badgeColor[evento.tipo]||'text-gray-400'}`}>{evento.tipo}</span>
+                    <span className={`text-xs font-mono px-3 py-1 uppercase tracking-wider ${badgeColor[evento.tipo] || 'text-gray-400'}`}>{evento.tipo}</span>
                   </div>
                 </div>
               )
