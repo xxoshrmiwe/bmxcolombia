@@ -14,9 +14,15 @@
   --polvo-oscuro: #2A1000;
   --disabled-bg: #333333;
   --disabled-text: #666666;
-  --font-titulo: 'Black Ops One', cursive;
+  --font-titulo: 'Barlow Condensed', sans-serif;
   --font-body: 'Barlow Condensed', sans-serif;
   --font-mono: 'Space Mono', monospace;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-titulo);
+  font-weight: 900;
+  font-style: italic;
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
